@@ -1,0 +1,2 @@
+This is source for the space invaders task, added as a placeholder for now, just to test that the cmakelists.txt is working correctly
+- Gordon
