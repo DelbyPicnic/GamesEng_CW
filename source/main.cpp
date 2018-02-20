@@ -41,7 +41,7 @@ void Render(RenderWindow &window)
 
 int main()
 {
-	RenderWindow window(VideoMode(gameWidth, gameHeight), "Project");
+	RenderWindow window(VideoMode(gameWidth, gameHeight), "fuck");
 
 	while (window.isOpen())
 	{
