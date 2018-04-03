@@ -2,4 +2,5 @@
 
 #include "scenes/menu.h"
 
-extern MainMenu menu;
+extern MainMenu mainmenu;
+extern OptionMenu optmenu;

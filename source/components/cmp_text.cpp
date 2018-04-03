@@ -17,3 +17,19 @@ void TextComponent::SetText(const std::string& str){
     _string = str;
     _text.setString(_string);
 }
+
+void MenuTextComponent::update(double dt) {}
+void MenuTextComponent::render() {
+    Renderer::queue(&_text);
+}
+
+MenuTextComponent::MenuTextComponent(Entity* const p, const std::string& str) : Component(p), _string(str){
+    _text.setString(_string);
+    _font = Resources::get<sf::Font>("zombie.ttf");
+    _text.setFont(*_font);
+}
+
+void MenuTextComponent::SetText(const std::string& str){
+    _string = str;
+    _text.setString(_string);
+}

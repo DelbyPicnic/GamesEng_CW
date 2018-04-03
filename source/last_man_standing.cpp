@@ -4,8 +4,9 @@
 
 using namespace std;
 
-MainMenu menu;
+MainMenu mainmenu;
+OptionMenu optmenu;
 
 int main(){
-    Engine::Start(1280, 720, "Last Man Standing", &menu);
+    Engine::Start(1280, 720, "Last Man Standing", &mainmenu);
 }

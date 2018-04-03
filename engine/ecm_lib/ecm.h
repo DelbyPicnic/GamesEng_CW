@@ -50,7 +50,7 @@ protected:
   bool _fordeletion; // should be deleted
   std::set<std::string> _tags;
 
-public:
+public:               // Note to self: Entity should prolly have a move function.
   void addTag(const std::string& t);
   const std::set<std::string>& getTags() const;
   Scene* const scene;
@@ -62,7 +62,6 @@ public:
 
   virtual void render();
 
-  //
   const sf::Vector2f& getPosition() const;
 
   void setPosition(const sf::Vector2f& _position);
