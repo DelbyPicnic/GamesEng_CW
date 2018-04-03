@@ -1,4 +1,13 @@
 cmake_minimum_required(VERSION 3.9)
+
+# Set compiler flags
+if (MSVC)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /EHsc" CACHE INTERNAL "" FORCE)
+elseif(APPLE)
+  set(CMAKE_OSX_DEPLOYMENT_TARGET 10.9 CACHE STRING "")
+  set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
+endif()
+
 # Require modern C++
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,15 +21,37 @@ SET(OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/")
 SET (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY})
 
 ### Add External Deps ###
-add_subdirectory("lib/sfml")
+# SFML - graphics library
+add_subdirectory("lib/sfml" EXCLUDE_FROM_ALL)
+#include_directories("lib/sfml/include")
 set(SFML_INCS "lib/sfml/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 
-### Build ###
+file(GLOB_RECURSE RESOURCE_FILES "res/*.*")
+####
+file(GLOB_RECURSE SOURCE_FILES engine/src/*.cpp engine/src/*.h)
+add_library(engine_lib STATIC ${SOURCE_FILES} ${RESOURCE_FILES})
+target_include_directories(engine_lib INTERFACE "${CMAKE_SOURCE_DIR}/engine/src/")
+target_link_libraries(engine_lib maths_lib ecm_lib sfml-graphics sfml-audio)
+
+## Maths lib
+add_library(maths_lib INTERFACE)
+target_sources(maths_lib INTERFACE "${CMAKE_SOURCE_DIR}/engine/maths_lib/maths.h")
+target_include_directories(maths_lib INTERFACE "${CMAKE_SOURCE_DIR}/engine/maths_lib" INTERFACE ${SFML_INCS})
+
+## ECM lib
+file(GLOB_RECURSE SOURCE_FILES engine/ecm_lib/*.cpp engine/ecm_lib/*.h)
+add_library(ecm_lib STATIC ${SOURCE_FILES})
+target_include_directories(ecm_lib INTERFACE "${CMAKE_SOURCE_DIR}/engine/ecm_lib" )
+target_link_libraries(ecm_lib PRIVATE maths_lib)
+
+## 6 - Platformer
 file(GLOB_RECURSE SOURCES source/*.cpp source/*.h)
-add_executable(GAME ${SOURCES})
-target_include_directories(GAME PRIVATE ${SFML_INCS})
-target_link_libraries(GAME sfml-graphics)
-set_target_properties(GAME PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration))
-add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/res" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res)
-add_dependencies(GAME copy_resources)
+file(GLOB_RECURSE CMPNTS source/components/*.cpp source/components/*.h)
+file(GLOB_RECURSE SCENES source/scenes/*.cpp source/scenes/*.h)
+add_executable(GAME ${SOURCES} ${RESOURCE_FILES})
+source_group("components" FILES ${CMPNTS})
+source_group("resources" FILES ${RESOURCE_FILES})
+#target_include_directories(GAME SYSTEM PRIVATE ${SFML_INCS})
+target_link_libraries(GAME engine_lib)
+set(EXECUTABLES ${EXECUTABLES} GAME)
