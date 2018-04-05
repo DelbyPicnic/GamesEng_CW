@@ -7,6 +7,8 @@ public:
     ~MainMenu() override = default;
     void Load() override;
     void Update(const double& dt) override;
+private:
+    unsigned int _selItem = 0;
 };
 
 class OptionMenu : public Scene {

@@ -89,6 +89,7 @@ void Engine::Start(unsigned int width, unsigned int height, const std::string& g
             if(evt.type == Event::Closed){
                 window.close();
             }
+            cout << "Engine Event" << endl;
         }
         if (Keyboard::isKeyPressed(Keyboard::Escape)){
             window.close();
