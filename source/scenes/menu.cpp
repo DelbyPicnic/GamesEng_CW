@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <array>
+#include <thread>
 
 using namespace std;
 using namespace sf;
@@ -38,36 +39,34 @@ void MainMenu::Load() {
             float textMPoint = scrMiddle - (mItemText->getWidth() / 2);
             mItem->setPosition(Vector2f(static_cast<float>(textMPoint), 270.f + (35.0f * i)));
         }
+        // Add load time *** TEMP ***
+        //std::this_thread::sleep_for(std::chrono::milliseconds(3000));
         
     }
     setLoaded(true);
 }
 
 void MainMenu::Update(const double& dt){
-    // Get menu inputs
+    // Get system events from the window:
     sf::Event event;
-    
-    /*
     while(Engine::GetWindow().pollEvent(event)){
-        cout << "Event Fired" << endl;
+        if(event.type == Event::Closed){
+                Engine::GetWindow().close();
+        }
         if(event.type == sf::Event::KeyPressed){
-            if(event.key.code == sf::Keyboard::W){
+            if(event.key.code == sf::Keyboard::Up){
                 if(_selItem > 0){
                     _selItem--;
                 }
             }
-            if(event.key.code == sf::Keyboard::S){
+            if(event.key.code == sf::Keyboard::Down){
                 if (_selItem < 4){
                     _selItem++;
                 }
             }
         }
     }
-    */
 
-    if(sf::Keyboard::isKeyPressed(Keyboard::O)){
-        Engine::ChangeScene(&optmenu);
-    }
     // Update all menu items
     vector<shared_ptr<Entity>> mItems = ents.find("menu");
     for(auto &ent : mItems){
@@ -84,6 +83,22 @@ void MainMenu::Update(const double& dt){
         selEntText[0]->SetColour(sf::Color::Red);
     }else{
         std::cout << "No Item Selected!" << std::endl;
+    }
+
+    // User selection actionables
+    if(Keyboard::isKeyPressed(Keyboard::Return)){
+        switch(_selItem){
+            case 0 :    std::cout << "Start New Game" << std::endl;
+                        break;
+            case 1 :    std::cout << "Load Saved Game" << std::endl;
+                        break;
+            case 2 :    Engine::ChangeScene(&optmenu);
+                        break;
+            case 3 :    std::cout << "Opening Credits" << std::endl;
+                        break;
+            case 4 :    Engine::GetWindow().close();
+                        break;
+        }
     }
     
     Scene::Update(dt);

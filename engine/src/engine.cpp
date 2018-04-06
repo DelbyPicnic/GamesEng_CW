@@ -1,6 +1,7 @@
 #include "engine.h"
 #include "maths.h"
 #include "system_renderer.h"
+#include "system_resources.h"
 #include <SFML/Graphics.hpp>
 #include <future>
 #include <iostream>
@@ -32,12 +33,10 @@ void Loading_render(){
     octagon.setRotation(loadingspinner);
     octagon.setPosition(Vcast<float>(Engine::GetWindowSize()) * 0.5f);
     octagon.setFillColor(Color(255,255,255,min(255.f,40.f*loadingTime)));
-    /*          Not implemented the resources system yet
     static Text t("Now Loading", *Resources::get<sf::Font>("RobotoMono-Regular.ttf"));
     t.setFillColor(Color(255, 255, 255, min(255.0f, 40.0f*loadingTime)));
     t.setPosition(Vcast<float>(Engine::GetWindowSize()) * Vector2f(0.4f,0.3f));
     Renderer::queue(&t);
-    */
     Renderer::queue(&octagon);
 }
 
@@ -84,13 +83,6 @@ void Engine::Start(unsigned int width, unsigned int height, const std::string& g
     Renderer::initialise(window);
     ChangeScene(scn);
     while (window.isOpen()){
-        Event evt;
-        while (window.pollEvent(evt)){
-            if(evt.type == Event::Closed){
-                window.close();
-            }
-            cout << "Engine Event" << endl;
-        }
         if (Keyboard::isKeyPressed(Keyboard::Escape)){
             window.close();
         }
