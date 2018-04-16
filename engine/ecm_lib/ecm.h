@@ -45,9 +45,9 @@ protected:
   std::vector<std::shared_ptr<Component>> _components;
   sf::Vector2f _position;
   float _rotation;
-  bool _alive;       // should be updated
-  bool _visible;     // should be rendered
-  bool _fordeletion; // should be deleted
+  bool _alive;        // should be updated   DEFAULTS
+  bool _visible;      // should be rendered
+  bool _fordeletion;  // should be deleted
   std::set<std::string> _tags;
 
 public:               // Note to self: Entity should prolly have a move function.

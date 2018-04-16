@@ -2,11 +2,9 @@
 #include <system_renderer.h>
 #include <system_resources.h>
 #include <iostream>
-
 void TextComponent::update(double dt) {
-    _text.setPosition(_parent->getPosition());
-    _text.setRotation(_parent->getRotation());
 }
+
 void TextComponent::render() {
     Renderer::queue(&_text);
 }
@@ -37,6 +35,14 @@ void TextComponent::SetColour(const sf::Color colour){
 
 void TextComponent::SetScale(const float scale){
     _text.setScale(sf::Vector2f(scale,scale));
+}
+
+void TextComponent::SetPosition(const sf::Vector2f position){
+    _text.setPosition(position);
+}
+
+void TextComponent::SetRotation(const float rotation){
+    _text.setRotation(rotation);
 }
 
 float TextComponent::getWidth(){

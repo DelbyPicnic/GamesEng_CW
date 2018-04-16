@@ -4,3 +4,4 @@
 
 extern MainMenu mainmenu;
 extern OptionMenu optmenu;
+extern CreditsMenu crdmenu;

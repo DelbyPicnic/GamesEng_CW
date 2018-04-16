@@ -17,6 +17,8 @@ public:
     void SetFontSize(unsigned int fntSize);
     void SetColour(const sf::Color colour);
     void SetScale(const float scale);
+    void SetPosition(const sf::Vector2f position);
+    void SetRotation(const float rotation);
 
     float getWidth();
 

@@ -1,4 +1,5 @@
 #include "ecm.h"
+#include <iostream>
 
 using namespace std;
 
@@ -85,7 +86,7 @@ Component::~Component() {}
 bool Component::is_fordeletion() const { return _fordeletion; }
 
 void EntityManager::update(double dt) {
-  for (size_t i = 0; i < list.size(); i++) {
+  for (size_t i = 0; i < list.size(); ++i) {
     if (list[i]->is_fordeletion()) {
       list.erase(list.begin() + i);
       --i;

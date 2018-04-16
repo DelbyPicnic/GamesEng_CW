@@ -6,7 +6,15 @@ using namespace std;
 
 MainMenu mainmenu;
 OptionMenu optmenu;
+CreditsMenu crdmenu;
 
 int main(){
-    Engine::Start(1280, 720, "Last Man Standing", &mainmenu);
+    Settings* s = new Settings();
+    s->screen_width = 1280;
+    s->screen_height = 720;
+    s->vsync = true;
+    s->fullscreen = false;
+    s->input_type = "KEYBOARD";
+
+    Engine::Start(*s, "Last Man Standing", &mainmenu);
 }
