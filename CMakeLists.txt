@@ -27,12 +27,15 @@ add_subdirectory("lib/sfml" EXCLUDE_FROM_ALL)
 set(SFML_INCS "lib/sfml/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 
+
+
 file(GLOB_RECURSE RESOURCE_FILES "res/*.*")
 ####
 file(GLOB_RECURSE SOURCE_FILES engine/src/*.cpp engine/src/*.h)
 add_library(engine_lib STATIC ${SOURCE_FILES} ${RESOURCE_FILES})
-target_include_directories(engine_lib INTERFACE "${CMAKE_SOURCE_DIR}/engine/src/")
-target_link_libraries(engine_lib maths_lib ecm_lib sfml-graphics sfml-audio)
+target_include_directories(engine_lib INTERFACE "${CMAKE_SOURCE_DIR}/engine/src/" PUBLIC SYSTEM ${B2D_INCS})
+target_link_libraries(engine_lib maths_lib ecm_lib lib_tile_level_loader sfml-graphics sfml-audio)
+
 
 ## Maths lib
 add_library(maths_lib INTERFACE)
@@ -45,6 +48,12 @@ add_library(ecm_lib STATIC ${SOURCE_FILES})
 target_include_directories(ecm_lib INTERFACE "${CMAKE_SOURCE_DIR}/engine/ecm_lib" )
 target_link_libraries(ecm_lib PRIVATE maths_lib)
 
+# Tile Loader
+file(GLOB_RECURSE SOURCE_FILES engine/lib_tile_level_loader/*.cpp engine/lib_tile_level_loader/*.h)
+add_library(lib_tile_level_loader STATIC ${SOURCE_FILES} ${RESOURCE_FILES})
+target_include_directories(lib_tile_level_loader INTERFACE "${CMAKE_SOURCE_DIR}/engine/lib_tile_level_loader/" )
+target_link_libraries(lib_tile_level_loader maths_lib sfml-graphics)
+
 ## 6 - Platformer
 file(GLOB_RECURSE SOURCES source/*.cpp source/*.h)
 file(GLOB_RECURSE CMPNTS source/components/*.cpp source/components/*.h)
@@ -52,6 +61,6 @@ file(GLOB_RECURSE SCENES source/scenes/*.cpp source/scenes/*.h)
 add_executable(GAME ${SOURCES} ${RESOURCE_FILES})
 source_group("components" FILES ${CMPNTS})
 source_group("resources" FILES ${RESOURCE_FILES})
-#target_include_directories(GAME SYSTEM PRIVATE ${SFML_INCS})
+target_include_directories(GAME SYSTEM PRIVATE ${SFML_INCS} )
 target_link_libraries(GAME engine_lib)
 set(EXECUTABLES ${EXECUTABLES} GAME)
