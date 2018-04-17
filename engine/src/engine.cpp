@@ -33,12 +33,10 @@ void Loading_render(){
     octagon.setRotation(loadingspinner);
     octagon.setPosition(Vcast<float>(Engine::GetWindowSize()) * 0.5f);
     octagon.setFillColor(Color(255,255,255,min(255.f,40.f*loadingTime)));
-    /*          Not implemented the resources system yet
     static Text t("Now Loading", *Resources::get<sf::Font>("RobotoMono-Regular.ttf"));
     t.setFillColor(Color(255, 255, 255, min(255.0f, 40.0f*loadingTime)));
     t.setPosition(Vcast<float>(Engine::GetWindowSize()) * Vector2f(0.4f,0.3f));
     Renderer::queue(&t);
-    */
     Renderer::queue(&octagon);
 }
 
@@ -78,19 +76,13 @@ void Engine::Render(RenderWindow& window){
     Renderer::render();
 }
 
-void Engine::Start(unsigned int width, unsigned int height, const std::string& gameName, Scene* scn){
-    RenderWindow window(VideoMode(width, height), gameName);
+void Engine::Start(Settings s, const std::string& gameName, Scene* scn){
+    RenderWindow window(VideoMode(s.screen_width, s.screen_height), gameName);
     _gameName = gameName;
     _window = &window;
     Renderer::initialise(window);
     ChangeScene(scn);
     while (window.isOpen()){
-        Event evt;
-        while (window.pollEvent(evt)){
-            if(evt.type == Event::Closed){
-                window.close();
-            }
-        }
         if (Keyboard::isKeyPressed(Keyboard::Escape)){
             window.close();
         }

@@ -8,9 +8,19 @@
 
 using namespace std;
 
-MainMenu menu;
+MainMenu mainmenu;
+OptionMenu optmenu;
+CreditsMenu crdmenu;
 Level level;
 
+
 int main(){
-    Engine::Start(1280, 720, "Last Man Standing", &menu);
+    Settings* s = new Settings();
+    s->screen_width = 1280;
+    s->screen_height = 720;
+    s->vsync = true;
+    s->fullscreen = false;
+    s->input_type = "KEYBOARD";
+
+    Engine::Start(*s, "Last Man Standing", &mainmenu);
 }

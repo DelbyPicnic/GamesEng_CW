@@ -4,5 +4,8 @@
 #include "scenes/level.h"
 
 
-extern MainMenu menu;
+extern MainMenu mainmenu;
+extern OptionMenu optmenu;
+extern CreditsMenu crdmenu;
 extern Level level;
+

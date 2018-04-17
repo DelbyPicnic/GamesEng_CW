@@ -6,6 +6,15 @@
 #include <mutex>
 #include <string>
 
+// Declare struct containing default settings
+struct Settings {
+    unsigned int screen_width = 640;
+    unsigned int screen_height = 480;
+    bool fullscreen = false;
+    bool vsync = true;
+    std::string input_type = "KEYBOARD";
+};
+
 class Scene {
 public:
     Scene() = default;
@@ -32,7 +41,7 @@ private:
 class Engine {
 public:
     Engine() = delete;
-    static void Start(unsigned int width, unsigned int height, const std::string& gameName, Scene* scn);
+    static void Start(Settings s, const std::string& gameName, Scene* scn);
     static void ChangeScene(Scene*);
     static sf::RenderWindow& GetWindow();
     static sf::Vector2u GetWindowSize();
