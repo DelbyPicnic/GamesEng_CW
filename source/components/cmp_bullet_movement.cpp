@@ -26,7 +26,7 @@ void BulletMovement::render()
 
 BulletMovement::BulletMovement(Entity* p, bool fired) : Component(p), _isDirectionSet(false), _speed(2.f), _direction(5), _horizontal(0.f), _vertical(0.f), _fired(fired) {}
 
-void BulletMovement::move(sf::Vector2f& p)
+void BulletMovement::move(sf::Vector2f p)
 {
 	auto pp = _parent->getPosition() + p;
 	_parent->setPosition(pp);

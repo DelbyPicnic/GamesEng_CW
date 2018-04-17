@@ -1,7 +1,7 @@
 #pragma once
 
 #include "scenes/menu.h"
-#include "scenes/level.h"
+#include "scenes/Level.h"
 
 
 extern MainMenu mainmenu;
