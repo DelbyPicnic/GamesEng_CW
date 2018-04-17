@@ -8,6 +8,7 @@ using namespace std;
 
 void MovementComponent::update(double dt)
 {
+	//moves player based on keyboard input
 	float horizontal = 0.0f;
 	float vertical = 0.0f;
 	if (Keyboard::isKeyPressed(Keyboard::Up))
@@ -27,12 +28,6 @@ void MovementComponent::render()
 }
 
 MovementComponent::MovementComponent(Entity* p) : _speed(100.0f), Component(p) {}
-/*
-bool MovementComponent::validMove(const sf::Vector2f& pos)
-{
-	return (LevelSystem::getTileAt(pos) != LevelSystem::WALL);
-}
-*/
 
 void MovementComponent::move(const sf::Vector2f& p)
 {
