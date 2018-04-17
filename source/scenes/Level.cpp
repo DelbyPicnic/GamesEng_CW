@@ -45,6 +45,7 @@ void Level::Unload()
 
 void Level::Update(const double& dt)
 {
+	auto play_health = player->get_components<PlayerComponent>();
 	// Get system events from the window:
     sf::Event event;
     while(Engine::GetWindow().pollEvent(event)){
@@ -77,7 +78,7 @@ void Level::Update(const double& dt)
 		b->getShape().setOrigin(10.0f, 15.0f);
 	}
 	//makes sure too many zombies aren't spawned at one time
-	if (zombie_count <= 10 && spawn_time <= 0.0f && lefttospawn != 0)
+	if (zombie_count <= 10 && spawn_time <= 0.0f && lefttospawn != 0 && !play_health[0]->death())
 	{
 		//creates zombie and adds to list that are on screen
 		shared_ptr<Entity> zombie = makeEntity();
@@ -97,7 +98,7 @@ void Level::Update(const double& dt)
 	}
 	int zombieID = 0;
 	auto play = player->get_components<ShapeComponent>();
-	auto play_health = player->get_components<PlayerComponent>();
+	///auto play_health = player->get_components<PlayerComponent>();
 	auto zombie_list = ents.find("zombie");
 	auto bullet_list = ents.find("bullet");
 	for (auto &e : zombie_list)
