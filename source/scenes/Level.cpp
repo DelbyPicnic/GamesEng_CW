@@ -45,6 +45,14 @@ void Level::Unload()
 
 void Level::Update(const double& dt)
 {
+	// Get system events from the window:
+    sf::Event event;
+    while(Engine::GetWindow().pollEvent(event)){
+        if(event.type == Event::Closed){
+                Engine::GetWindow().close();
+        }
+    }
+
 	//keeps count of number of spawned zombies
 	zombie_count = zombies.size();
 	//used to determine if new bullet should be created
@@ -129,7 +137,7 @@ void Level::Update(const double& dt)
 	}
 	if (play_health[0]->death())
 	{
-		Engine::GetWindow().close();
+		Engine::ChangeScene(&mainmenu);
 	}
 	if (TimeSinceHit >= 0.1f)
 		play[0]->getShape().setFillColor(Color::Red);

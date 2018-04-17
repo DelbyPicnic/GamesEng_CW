@@ -15,7 +15,7 @@ public:
 	void update(double dt)override;
 	void render()override;
 	void move(float x, float y);
-	void move(sf::Vector2f&);
+	void move(sf::Vector2f);
 	explicit BulletMovement(Entity* p, bool fired = false);
 	BulletMovement() = delete;
 	//int setDirection(int dir);

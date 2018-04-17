@@ -81,7 +81,7 @@ void MainMenu::Update(const double& dt){
     // User selection actionables
     if(Keyboard::isKeyPressed(Keyboard::Return)){
         switch(_selItem){
-            case 0 :    std::cout << "Start New Game" << std::endl;
+            case 0 :    Engine::ChangeScene(&level);
                         break;
             case 1 :    std::cout << "Load Saved Game" << std::endl;
                         break;
