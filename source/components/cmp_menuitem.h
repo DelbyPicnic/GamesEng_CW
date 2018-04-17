@@ -21,7 +21,6 @@ protected:
     sf::Text _itemNameText;
     std::shared_ptr<sf::Font> _font;
     bool _isSelected = false;
-    bool _hasLoaded = false;
     const int _index;
 };
 
@@ -30,7 +29,7 @@ public:
     MenuSelectableComponent() = delete;
     ~MenuSelectableComponent() override = default;
     explicit MenuSelectableComponent(Entity* const p, const int mnuIndex, const bool selIndex, const std::string& str = "");
-    explicit MenuSelectableComponent(Entity* const p, const int mnuIndex, const int selIndex, std::vector<std::string> mnuOptns, const std::string& str = "");
+    //explicit MenuSelectableComponent(Entity* const p, const int mnuIndex, const int selIndex, std::vector<std::string> mnuOptns, const std::string& str = "");
 
     void update(double dt) override;
     void render() override;

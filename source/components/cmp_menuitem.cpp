@@ -3,6 +3,7 @@
 #include <system_renderer.h>
 #include <system_resources.h>
 #include <iostream>
+#include <memory>
 #include <vector>
 
 void MenuComponent::update(double dt) {
@@ -48,6 +49,7 @@ void MenuComponent::SetIndexPosition(const int index){
     _itemNameText.setPosition(sf::Vector2f(static_cast<float>(mitemMPoint), 170.0f + (index*30.f)));
 }
 
+// =====================================================================================
 // Selectable Menu Component
 void MenuSelectableComponent::SetSelectedIndex(const int increment){
     _selectedIndex += increment;
@@ -110,16 +112,14 @@ MenuSelectableComponent::MenuSelectableComponent(Entity* const p, const int mnuI
     MenuComponent::SetItemName(_itemName);
     SetMenuPosition(mnuIndex);
 }
-
-MenuSelectableComponent::MenuSelectableComponent(Entity* const p, const int mnuIndex, const int selIndex, std::vector<std::string> mnuOptns, const std::string& str) : MenuComponent(p, mnuIndex, str){
-    for (auto &itm : mnuOptns){
-        _selectRange.push_back(itm);
-    }
-    _itemStatusText.setString(mnuOptns[selIndex]);
+/*
+MenuSelectableComponent::MenuSelectableComponent(Entity* const p, const int mnuIndex, const int selIndex, std::vector<std::string> mnuOptns, const std::string& str) : MenuComponent(p, mnuIndex, str), _selectRange(mnuOptns){
+    
+    _itemStatusText.setString(mnuOptns[0]); //temp
     _font = Resources::get<sf::Font>("times_new_yorker.ttf");
     _itemStatusText.setFont(*_font);
 
     MenuComponent::SetItemName(_itemName);
     SetMenuPosition(mnuIndex);
 }
-
+*/

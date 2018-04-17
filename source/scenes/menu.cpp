@@ -115,6 +115,7 @@ void OptionMenu::Load(){
     
         // Build options menu
         // Toggle options:
+        
         std::array<std::string, 3> menuItems {"Fullscreen", "Vertical Sync (Vsync)", "Use Controller"};
         for(int i = 0; i < menuItems.size(); i++ ){
             auto mItem = makeEntity();
@@ -122,11 +123,13 @@ void OptionMenu::Load(){
             mItem->addTag("menu");
             mItem->addTag(to_string(i));
         }
-        
-        std::vector<std::string> scrRes = {"640x480", "800x600", "1280x720", "1920x1080"};
+
+        /*
+        std::shared_ptr<std::vector<std::string>> scrRes;
         auto resItem = makeEntity();
         auto resItemComp = resItem->addComponent<MenuSelectableComponent>(4, 1, scrRes, "Resolution");
         resItem->addTag("menu");
+        */
     }
     setLoaded(true);
 }
@@ -137,7 +140,9 @@ void OptionMenu::Update(const double& dt){
     for(auto &ent : mItems){
         // Get entity component
         auto entText = ent->get_components<MenuSelectableComponent>();
-        entText[0]->IsSelected(false);
+        if(entText[0] != nullptr){
+            entText[0]->IsSelected(false);
+        }
     }
     
     // Update the selected menu item
@@ -164,7 +169,7 @@ void OptionMenu::Update(const double& dt){
                 }
             }
             if(event.key.code == sf::Keyboard::Down){
-                if (_selItem < 4){
+                if (_selItem < 2){
                     _selItem++;
                 }
             }
@@ -178,9 +183,11 @@ void OptionMenu::Update(const double& dt){
             }
             if(event.key.code == sf::Keyboard::BackSpace){
                 Engine::ChangeScene(&mainmenu);
+                goto end;
             }
         }
     }
+    end:
     Scene::Update(dt);
 }
 
