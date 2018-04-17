@@ -1,12 +1,18 @@
 #include "engine.h"
 #include "game.h"
 #include "scenes/menu.h"
+#include "scenes/Level.h"
+#include <SFML/Graphics.hpp>
+#include <iostream>
+
 
 using namespace std;
 
 MainMenu mainmenu;
 OptionMenu optmenu;
 CreditsMenu crdmenu;
+Level level;
+
 
 int main(){
     Settings* s = new Settings();
