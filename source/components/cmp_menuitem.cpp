@@ -91,6 +91,10 @@ void MenuSelectableComponent::render() {
     Renderer::queue(&_itemStatusText);
 }
 
+int MenuSelectableComponent::GetSelectedIndex(){
+    return _selectedIndex;
+}
+
 MenuSelectableComponent::MenuSelectableComponent(Entity* const p, const int mnuIndex, const bool status, const std::string& str) : MenuComponent(p, mnuIndex, str){
     _selectRange.push_back("OFF");
     _selectRange.push_back("ON");
@@ -112,14 +116,3 @@ MenuSelectableComponent::MenuSelectableComponent(Entity* const p, const int mnuI
     MenuComponent::SetItemName(_itemName);
     SetMenuPosition(mnuIndex);
 }
-/*
-MenuSelectableComponent::MenuSelectableComponent(Entity* const p, const int mnuIndex, const int selIndex, std::vector<std::string> mnuOptns, const std::string& str) : MenuComponent(p, mnuIndex, str), _selectRange(mnuOptns){
-    
-    _itemStatusText.setString(mnuOptns[0]); //temp
-    _font = Resources::get<sf::Font>("times_new_yorker.ttf");
-    _itemStatusText.setFont(*_font);
-
-    MenuComponent::SetItemName(_itemName);
-    SetMenuPosition(mnuIndex);
-}
-*/

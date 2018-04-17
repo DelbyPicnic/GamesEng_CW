@@ -81,7 +81,7 @@ void MainMenu::Update(const double& dt){
     // User selection actionables
     if(Keyboard::isKeyPressed(Keyboard::Return)){
         switch(_selItem){
-            case 0 :    std::cout << "Start New Game" << std::endl;
+            case 0 :    Engine::ChangeScene(&level);
                         break;
             case 1 :    std::cout << "Load Saved Game" << std::endl;
                         break;
@@ -124,13 +124,6 @@ void OptionMenu::Load(){
             mItem->addTag("menu");
             mItem->addTag(to_string(i));
         }
-
-        /*
-        std::shared_ptr<std::vector<std::string>> scrRes;
-        auto resItem = makeEntity();
-        auto resItemComp = resItem->addComponent<MenuSelectableComponent>(4, 1, scrRes, "Resolution");
-        resItem->addTag("menu");
-        */
     }
     setLoaded(true);
 }
@@ -181,6 +174,44 @@ void OptionMenu::Update(const double& dt){
             if(event.key.code == sf::Keyboard::Right){
                 auto entText = mItems[_selItem]->get_components<MenuSelectableComponent>();
                 entText[0]->SetSelectedIndex(1);
+            }
+
+            if(event.key.code == sf::Keyboard::Space){
+                // Apply settings
+                cout << "Applying settings" << endl;
+                // Create new settings instance
+                Settings* s = new Settings;
+                cout << "Created new settings instance" << endl;
+                // Get fullscreen configuration
+                auto entFullscreen = mItems[0]->get_components<MenuSelectableComponent>();
+                if (entFullscreen[0]->GetSelectedIndex() == 1){
+                    s->fullscreen = true;
+                }else{
+                    s->fullscreen = false;
+                }
+                cout << "Got fullscreen config" << endl;
+                // Get vsync configuration
+                auto entVsync = mItems[1]->get_components<MenuSelectableComponent>();
+                if (entVsync[0]->GetSelectedIndex() == 1){
+                    s->vsync = true;
+                }else{
+                    s->vsync = false;
+                }
+                cout << "Got vsync configuration" << endl;
+                // Get controller configuration
+                auto entController = mItems[2]->get_components<MenuSelectableComponent>();
+                if (entController[0]->GetSelectedIndex() == 1){
+                    s->input_type = "CONTROLLER";
+                }else{
+                    s->input_type = "KEYBOARD";
+                }
+
+                s->screen_width = 1920;
+                s->screen_height = 1080;
+
+                // Pass settings to engine to restart
+                Engine::GetWindow().close();
+                Engine::Start(*s, "Last Man Standing", &mainmenu);
             }
             if(event.key.code == sf::Keyboard::BackSpace){
                 Engine::ChangeScene(&mainmenu);

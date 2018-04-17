@@ -45,6 +45,13 @@ void Level::Unload()
 
 void Level::Update(const double& dt)
 {
+
+	sf::Event event;
+    while(Engine::GetWindow().pollEvent(event)){
+        if(event.type == Event::Closed){
+                Engine::GetWindow().close();
+        }
+    }
 	//keeps count of number of spawned zombies
 	zombie_count = zombies.size();
 	//used to determine if new bullet should be created

@@ -16,8 +16,8 @@ Level level;
 
 int main(){
     Settings* s = new Settings();
-    s->screen_width = 1280;
-    s->screen_height = 720;
+    s->screen_width = 1920;
+    s->screen_height = 1080;
     s->vsync = true;
     s->fullscreen = false;
     s->input_type = "KEYBOARD";
